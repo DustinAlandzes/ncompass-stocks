@@ -1,0 +1,8 @@
+<div>label - price - difference (1 day) - percentage difference (1 day)</div>
+{% for ticker in tickers %}
+	{% if ticker["difference"] < 0 %}
+		<div style="color:red">{{ ticker["label"] }} {{ ticker["price"] }} {{ ticker["difference"] }} {{ ticker["percentage"] }} ↓</div>
+	{% else %}
+	        <div style="color:green">{{ ticker["label"] }} {{ ticker["price"] }} {{ ticker["difference"] }} {{ ticker["percentage"] }} ↑</div>
+	{% endif %}
+{% endfor %}
