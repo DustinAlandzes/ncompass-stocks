@@ -1,8 +1,80 @@
-<div>label - price - difference (1 day) - percentage difference (1 day)</div>
+<html>
+<head>
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src="{{url_for('static', filename='flexibility.js')}}"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<style>
+		html, body {
+			font-family: 'Open Sans', sans-serif;
+			color: {{ style["font-color"]}};
+			font-weight: {{ style["font-weight"] }};
+			font-size: {{ style["font-size"] }}
+		}
+
+		ul {
+		  display: flex;
+		  flex-flow: column wrap;
+		  height:300px;
+		  list-style-type: none;
+		}
+
+		ul ~ ul {
+		  flex-flow: row wrap;
+		  max-height: auto;
+		}
+
+		li {
+		  width: 50%;
+		  height: 100px;
+		}
+
+		.stock {
+			text-align: center;
+		}
+
+		.arrow-down {
+			color: red;
+		}
+		.arrow-up {
+			color: green;
+		}
+
+		.fullbackground{
+			position:relative;
+		}
+
+		img.fullbackground{
+			position:absolute;
+			z-index:-1;
+			top:0;
+			left:0;
+			width:100%; /* alternative: right:0; */
+			height:100%; /* alternative: bottom:0; */
+			border-color: #f00;
+		}
+	</style>
+</head>
+<body>
+{% if style["background"] is defined %}
+	<img class="fullbackground" src="{{ style["background"] }}">
+{% endif %}
+
+<div class="container">
+<ul>
 {% for ticker in tickers %}
+	<li>
+		<span class="label">{{ ticker["label"] }}</span>
+		<span class="price">{{ ticker["price"] }}</span>
+		<span class="difference">{{ ticker["difference"] }}</span>
+		<span class="percentage">{{ ticker["percentage"] }}%</span>
 	{% if ticker["difference"] < 0 %}
-		<div style="color:red">{{ ticker["label"] }} {{ ticker["price"] }} {{ ticker["difference"] }} {{ ticker["percentage"] }} ↓</div>
+		<span class="arrow-down">↓</span>
 	{% else %}
-	        <div style="color:green">{{ ticker["label"] }} {{ ticker["price"] }} {{ ticker["difference"] }} {{ ticker["percentage"] }} ↑</div>
+		<span class="arrow-up">↑</span>
 	{% endif %}
+	</li>
 {% endfor %}
+</ul>
+</body>
+</html>
