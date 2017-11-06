@@ -30,16 +30,18 @@ def fetch_ticker_data(tickers):
 @app.route("/")
 def index():
 	# get style parameters
-	style = {"background": request.args.get("background"),
+	style = {
+		"background": request.args.get("background"),
 		"font-size": request.args.get("font-size"),
 		"font-color": request.args.get("font-color"),
 		"font-weight": request.args.get("font-weight")
-	}
+		}
+	
 	# get symbol & label parameters
 	symbols = [symbol.strip() for symbol in request.args.get("symbols").split(',')]
 	labels = [label.strip() for label in request.args.get("labels").split(',')]
 
-	# combine symbol & tlabels into ticker list
+	# combine symbol & labels into ticker list
 	# in order to pass to fetch_ticker_data
 	tickers = []
 	for symbol, label in zip(symbols, labels):
